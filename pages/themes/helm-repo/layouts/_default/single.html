@@ -1,0 +1,35 @@
+{{ define "main" }}
+<header class="l-masthead">
+  <section class="l-masthead-top l-masthead-top-dense">
+    <div class="l-container">
+      <nav>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{{ .Site.BaseURL }}" class="breadcrumb-item-link">
+              {{ .Site.Title }}
+            </a>
+          </li>
+          <li class="breadcrumb-item">
+            {{ .Title }}
+          </li>
+        </ul>
+      </nav>
+      <h1 class="introduction-title">
+        {{- if .Site.Params.allcapsTitle }}
+        {{ .Title | upper }}
+        {{- else }}
+        {{ .Title }}
+        {{- end }}
+      </h1>
+    </div>
+  </section>
+  <section class="l-masthead-bottom l-container">
+    <p class="introduction-description">
+      {{ .Description | default .Summary }}
+    </p>
+  </section>
+</header>
+<section class="l-container content l-footer-grow">
+  {{ .Content }}
+</section>
+{{ end }}

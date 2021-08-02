@@ -1,0 +1,12 @@
+name = "helm-repo"
+license = "GPL-3.0"
+licenselink = ""
+description = ""
+homepage = "https://github.com/LKummer/"
+tags = []
+features = []
+min_version = "0.51"
+
+[author]
+  name = "Lior Kummer"
+  homepage = "https://github.com/LKummer/"

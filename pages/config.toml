@@ -1,0 +1,33 @@
+baseURL = "https://lkummer.github.io/Helm-Charts"
+title = "Lior's Charts"
+languageCode = "en"
+DefaultContentLanguage = "en"
+enableInlineShortcodes = true
+footnoteReturnLinkContents = "^"
+
+theme = "helm-repo"
+pygmentsUseClasses = true
+
+[author]
+  name = "Lior Kummer"
+  homepage = "https://github.com/LKummer/"
+
+[Params]
+  subtitle = "Homelab Helm charts. In development, use with caution."
+  source = "https://github.com/LKummer/Helm-Charts"
+  allcapsTitle = true
+  overrideRepoName = "homelab"
+  overrideRepoURL = "https://lkummer.github.io/Helm-Charts"
+  favicon = "images/favicon.svg"
+[Params.seo]
+  description = "Lior's homelab Helm charts."
+  twitterCard = "summary_large_image"
+  [Params.seo.images]
+    ldPaths = [
+      "images/cover-1x1.png",
+      "images/cover-4x3.png",
+      "images/cover-16x9.png"
+    ]
+    ogPath = "images/cover-16x9.png"
+    ogHeight = "1080"
+    ogWidth = "1920"

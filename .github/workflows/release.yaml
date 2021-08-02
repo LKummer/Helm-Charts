@@ -1,0 +1,60 @@
+name: Release Charts
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.6.3
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.2.1
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Setup Hugo
+        if: hashFiles('./.cr-index/index.yaml') != ''
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.86.1'
+      
+      - name: Copy chart readmes to website content folder
+        if: hashFiles('./.cr-index/index.yaml') != ''
+        run: |
+          mkdir pages/content
+          for file in charts/*/README.md
+          do
+          cp "$file" "pages/content/$(echo $file | sed 's:charts/\(.*\)/README.md:\1.md:')"
+          done
+      
+      - name: Build website
+        if: hashFiles('./.cr-index/index.yaml') != ''
+        run: hugo --source pages --destination ../public
+      
+      - name: Copy Helm repo index to website
+        if: hashFiles('./.cr-index/index.yaml') != ''
+        run: cp .cr-index/index.yaml ./public/index.yaml
+      
+      - name: Deploy website
+        if: hashFiles('./.cr-index/index.yaml') != ''
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

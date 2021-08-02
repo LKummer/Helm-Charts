@@ -1,0 +1,41 @@
+{{ define "main" }}
+<header class="l-masthead">
+  <section class="l-masthead-top">
+    <div class="l-container">
+      <h1 class="introduction-title">
+        {{- if .Site.Params.allcapsTitle }}
+        {{ .Site.Title | upper }}
+        {{- else }}
+        {{ .Site.Title }}
+        {{- end }}
+      </h1>
+      <h2 class="introduction-subtitle">
+        {{ .Site.Params.subtitle }}
+      </h2>
+    </div>
+  </section>
+  <section class="l-masthead-bottom l-container">
+    <code class="introduction-code">
+      <span class="introduction-code-unselectable">$ </span>helm repo add  {{ .Site.Params.overrideRepoName | default (lower .Site.Title) }} {{ .Site.Params.overrideRepoURL | default .Site.BaseURL }}
+      <br>
+      <span class="introduction-code-unselectable">$ </span>helm repo update
+    </code>
+  </section>
+</header>
+<nav class="l-container l-footer-grow">
+  <ul class="l-cards">
+    {{- range .Pages }}
+    <li>
+      <a href="{{ .Permalink }}" class="card">
+        <h3 class="card-title">
+          {{ .Title }}
+        </h3>
+        <p class="card-subtitle">
+          {{ .Description | default .Summary }}
+        </p>
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+</nav>
+{{ end }}
