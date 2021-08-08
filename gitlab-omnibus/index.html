@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <link rel="stylesheet" href="https://lkummer.github.io/Helm-Charts/main.css">
+    <title>gitlab-omnibus</title>
+    <link rel="icon" href="https://lkummer.github.io/Helm-Charts/images/favicon.svg">
+    <meta name="description" content="Gitlab Omnibus deployment.">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:url" content="https://lkummer.github.io/Helm-Charts/gitlab-omnibus/" />
+    <meta property="og:title" content="gitlab-omnibus" />
+    <meta property="og:description" content="Gitlab Omnibus deployment." />
+    <meta property="og:image" content="https://lkummer.github.io/Helm-Charts/images/cover-16x9.png" />
+    <meta property="og:image:height" content="1080" />
+    <meta property="og:image:width" content="1920" />
+    <meta property="og:type" content="article" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "gitlab-omnibus",
+      "image": ["https://lkummer.github.io/Helm-Charts/images/cover-1x1.png","https://lkummer.github.io/Helm-Charts/images/cover-4x3.png","https://lkummer.github.io/Helm-Charts/images/cover-16x9.png"]
+    }
+    </script>
+  </head>
+  <body class="l-footer-page">
+<header class="l-masthead">
+  <section class="l-masthead-top l-masthead-top-dense">
+    <div class="l-container">
+      <nav>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="https://lkummer.github.io/Helm-Charts" class="breadcrumb-item-link">
+              Lior&#39;s Charts
+            </a>
+          </li>
+          <li class="breadcrumb-item">
+            gitlab-omnibus
+          </li>
+        </ul>
+      </nav>
+      <h1 class="introduction-title">
+        GITLAB-OMNIBUS
+      </h1>
+    </div>
+  </section>
+  <section class="l-masthead-bottom l-container">
+    <p class="introduction-description">
+      Gitlab Omnibus deployment.
+    </p>
+  </section>
+</header>
+<section class="l-container content l-footer-grow">
+  <h2 id="prerequisites">Prerequisites</h2>
+<p>Add the repository to Helm:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-s" data-lang="s"><span class="o">$</span> <span class="n">helm</span> <span class="n">repo</span> <span class="n">add</span> <span class="n">homelab</span> <span class="n">https</span><span class="o">://</span><span class="n">lkummer.github.io</span><span class="o">/</span><span class="n">Helm</span><span class="o">-</span><span class="n">Charts</span>
+<span class="o">$</span> <span class="n">helm</span> <span class="n">repo</span> <span class="n">update</span>
+</code></pre></div><h2 id="deploy-the-chart">Deploy the Chart</h2>
+<p>Create a <code>values.yaml</code> file with values you wish to override.</p>
+<p>Install the chart:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-s" data-lang="s"><span class="o">$</span> <span class="n">helm</span> <span class="n">install</span> <span class="n">example</span> <span class="n">homelab</span><span class="o">/</span><span class="n">gitlab</span><span class="o">-</span><span class="n">omnibus</span> <span class="o">--</span><span class="n">file</span> <span class="n">values.yaml</span>
+</code></pre></div><h2 id="upgrade-the-chart">Upgrade the Chart</h2>
+<p>Upgrade the chart:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-s" data-lang="s"><span class="o">$</span> <span class="n">helm</span> <span class="n">upgrade</span> <span class="n">example</span> <span class="n">homelab</span><span class="o">/</span><span class="n">gitlab</span><span class="o">-</span><span class="n">omnibus</span> <span class="o">--</span><span class="n">file</span> <span class="n">values.yaml</span>
+</code></pre></div><h2 id="delete-the-chart">Delete the Chart</h2>
+<p>Delete the chart:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-s" data-lang="s"><span class="o">$</span> <span class="n">helm</span> <span class="n">delete</span> <span class="n">example</span>
+</code></pre></div><h2 id="configuration">Configuration</h2>
+<p>The chart offers the following list of configuration values.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nameOverride</code></td>
+<td>Override the name of the chart.</td>
+</tr>
+<tr>
+<td><code>fullnameOverride</code></td>
+<td>Override the full name of the chart.</td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>Gitlab Omnibus image settings.</td>
+</tr>
+<tr>
+<td><code>image.repository</code></td>
+<td>Image repository and name to use.</td>
+</tr>
+<tr>
+<td><code>image.tag</code></td>
+<td>Image version tag to use.</td>
+</tr>
+<tr>
+<td><code>image.pullPolicy</code></td>
+<td>Image pull policy.</td>
+</tr>
+<tr>
+<td><code>image.pullSecrets</code></td>
+<td>Image pull secrets.</td>
+</tr>
+<tr>
+<td><code>podAnnotations</code></td>
+<td>Pod annotations.</td>
+</tr>
+<tr>
+<td><code>podSecurityContext</code></td>
+<td>Pod security context.</td>
+</tr>
+<tr>
+<td><code>volumeClaims</code></td>
+<td>Options for persistent volume claims.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.config</code></td>
+<td>Options for config folder persistent volume claims.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.config.enabled</code></td>
+<td>Enable creation of config persistent volume claim.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.config.name</code></td>
+<td>Config persistent volume claim name.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.config.annotations</code></td>
+<td>Config persistent volume claim annotations.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.config.resources</code></td>
+<td>Config persistent volume claim resource requests.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.config.volumeMode</code></td>
+<td>Config persistent volume claim volume mode.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.config.accessModes</code></td>
+<td>Config persistent volume claim access modes.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.config.selector</code></td>
+<td>Config persistent volume claim selector.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.data</code></td>
+<td>Options for data folder persistent volume claims.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.data.enabled</code></td>
+<td>Enable creation of data persistent volume claim.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.data.name</code></td>
+<td>Data persistent volume claim name.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.data.annotations</code></td>
+<td>Data persistent volume claim annotations.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.data.resources</code></td>
+<td>Data persistent volume claim resource requests.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.data.volumeMode</code></td>
+<td>Data persistent volume claim volume mode.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.data.accessModes</code></td>
+<td>Data persistent volume claim access modes.</td>
+</tr>
+<tr>
+<td><code>volumeClaims.data.selector</code></td>
+<td>Data persistent volume claim selector.</td>
+</tr>
+<tr>
+<td><code>securityContext</code></td>
+<td>Container security context.</td>
+</tr>
+<tr>
+<td><code>service</code></td>
+<td>Service related options.</td>
+</tr>
+<tr>
+<td><code>service.port</code></td>
+<td>Service target port.</td>
+</tr>
+<tr>
+<td><code>service.type</code></td>
+<td>Service type.</td>
+</tr>
+<tr>
+<td><code>ingress</code></td>
+<td>Ingress related options.</td>
+</tr>
+<tr>
+<td><code>ingress.enabled</code></td>
+<td>Enable ingress creation.</td>
+</tr>
+<tr>
+<td><code>ingress.hosts</code></td>
+<td>Ingress hosts.</td>
+</tr>
+<tr>
+<td><code>ingress.hosts.gitlab.url</code></td>
+<td>Gitlab primary hostname.</td>
+</tr>
+<tr>
+<td><code>ingress.hosts.pages.url</code></td>
+<td>Gitlab Pages hostname.</td>
+</tr>
+<tr>
+<td><code>ingress.hosts.registry.url</code></td>
+<td>Gitlab container registry hostname.</td>
+</tr>
+<tr>
+<td><code>ingress.annotations</code></td>
+<td>Ingress annotations.</td>
+</tr>
+<tr>
+<td><code>ingress.tls</code></td>
+<td>Ingress TLS options.</td>
+</tr>
+<tr>
+<td><code>resources</code></td>
+<td>Gitlab Omnibus resource requests and limits.</td>
+</tr>
+<tr>
+<td><code>nodeSelector</code></td>
+<td>Pod node selector.</td>
+</tr>
+<tr>
+<td><code>tolerations</code></td>
+<td>Pod tolerations.</td>
+</tr>
+<tr>
+<td><code>affinity</code></td>
+<td>Pod affinity.</td>
+</tr>
+<tr>
+<td><code>metrics</code></td>
+<td>Prometheus metrics related options.</td>
+</tr>
+<tr>
+<td><code>metrics.gitlab.whitelist</code></td>
+<td>Addresses to whitelist for collection.</td>
+</tr>
+<tr>
+<td><code>metrics.workhorse.port</code></td>
+<td>Workhorse metrics port.</td>
+</tr>
+<tr>
+<td><code>metrics.gitaly.port</code></td>
+<td>Gitaly metrics port.</td>
+</tr>
+<tr>
+<td><code>podMonitor</code></td>
+<td>Promehteus Operator PodMonitor related options.</td>
+</tr>
+<tr>
+<td><code>podMonitor.enabled</code></td>
+<td>Enable PodMonitor.</td>
+</tr>
+<tr>
+<td><code>podMonitor.labels</code></td>
+<td>PodMonitor labels.</td>
+</tr>
+<tr>
+<td><code>timezone</code></td>
+<td>Gitlab time zone.</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+
+    <footer class="l-footer">
+      <section class="l-container">
+        Star
+        <a href="https://github.com/LKummer/Helm-Charts" class="footer-link">the source on Github</a>.
+        <br>
+        Made with
+        <svg class="footer-heart" viewBox="0 0 16 16" aria-label="Heart icon">
+          <path class="footer-heart-fill" d="M8,14.9c-0.1,0-0.3-0.1-0.4-0.2L1.7,7.6C1.1,6.9,0.8,6,0.8,5.1c0-2.2,1.8-4,4-4c1.2,0,2.3,0.5,3,1.4
+            c0,0,0,0.1,0.1,0.1L8,2.9l0.2-0.3c0.8-1,1.9-1.5,3.1-1.5c2.2,0,4,1.8,4,4c0,0.9-0.3,1.8-0.9,2.5l-5.9,7.1C8.3,14.8,8.1,14.9,8,14.9
+            z"/>
+          <path class="footer-heart-stroke" d="M11.3,1.6c1.9,0,3.5,1.5,3.5,3.5c0,0.9-0.3,1.6-0.8,2.2l0,0L12.5,9L8,14.4L3.5,9L2.1,7.3C1.6,6.7,1.3,5.9,1.3,5.1
+            c0-1.9,1.5-3.5,3.5-3.5c1.1,0,2,0.5,2.6,1.2l0,0L8,3.6l0.6-0.7l0-0.1C9.3,2.1,10.2,1.6,11.3,1.6 M11.3,0.6C10,0.6,8.8,1.2,8,2.1
+            C7.2,1.2,6,0.6,4.7,0.6c-2.5,0-4.5,2-4.5,4.5c0,1,0.4,2.1,1,2.9l1.4,1.7L7.2,15c0.2,0.2,0.5,0.4,0.8,0.4c0.3,0,0.6-0.1,0.8-0.4
+            l4.5-5.4L14.7,8c0,0,0-0.1,0.1-0.1c0.7-0.8,1-1.8,1-2.8C15.8,2.6,13.8,0.6,11.3,0.6L11.3,0.6z"/>
+        </svg>
+        by
+        <a href="https://github.com/LKummer/" class="footer-link">Lior Kummer</a>.
+      </section>
+    </footer>
+    <script src='https://lkummer.github.io/Helm-Charts/main.js'></script>
+  </body>
+</html>
