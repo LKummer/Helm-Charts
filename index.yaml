@@ -1,0 +1,69 @@
+apiVersion: v1
+entries:
+  adguard:
+  - apiVersion: v2
+    appVersion: v0.106.3
+    created: "2021-08-08T15:05:49.20961419Z"
+    description: Adguard Home DNS server
+    digest: 5f335321430b02bae6c5b887babc77cd9949f39d2fce3e872c7f6e10c32c40dc
+    name: adguard
+    type: application
+    urls:
+    - https://github.com/LKummer/Helm-Charts/releases/download/adguard-1.0.0/adguard-1.0.0.tgz
+    version: 1.0.0
+  backup:
+  - apiVersion: v2
+    appVersion: 0.12.0
+    created: "2021-08-08T15:05:49.316683918Z"
+    description: Restic based backup and restore solution for persistent volume claims.
+    digest: 0a6c31f52369ef914b9e592dd4f5a7f5c5ac2dae9eaced3f9591ef3cf2e5d383
+    name: backup
+    type: application
+    urls:
+    - https://github.com/LKummer/Helm-Charts/releases/download/backup-1.0.0/backup-1.0.0.tgz
+    version: 1.0.0
+  debug-webserver:
+  - apiVersion: v2
+    appVersion: 1.21.1-alpine
+    created: "2021-08-08T15:05:49.419513913Z"
+    description: Basic Nginx webserver for debugging
+    digest: ffc5b9e1137530b073010e150a26dbd15d1ddb1402799305a077315b2f4f6d7e
+    name: debug-webserver
+    type: application
+    urls:
+    - https://github.com/LKummer/Helm-Charts/releases/download/debug-webserver-0.1.0/debug-webserver-0.1.0.tgz
+    version: 0.1.0
+  gitlab-omnibus:
+  - apiVersion: v2
+    appVersion: 13.10.2-ee.0
+    created: "2021-08-08T15:05:49.520612855Z"
+    description: Gitlab Omnibus deployment
+    digest: 653d57dbe682b54d7149df2046d663556630adbd69074860429551ec68c6d1ab
+    name: gitlab-omnibus
+    type: application
+    urls:
+    - https://github.com/LKummer/Helm-Charts/releases/download/gitlab-omnibus-0.1.0/gitlab-omnibus-0.1.0.tgz
+    version: 0.1.0
+  own-ca:
+  - apiVersion: v2
+    appVersion: v1.4.0
+    created: "2021-08-08T15:05:49.627608379Z"
+    description: Cert Manager resources for own CA cluster issuer
+    digest: 43d06c7c02beef8b211e701046467071418c842c058fd66f160ac8a78b8f7e50
+    name: own-ca
+    type: application
+    urls:
+    - https://github.com/LKummer/Helm-Charts/releases/download/own-ca-0.1.0/own-ca-0.1.0.tgz
+    version: 0.1.0
+  tfstate-postgres:
+  - apiVersion: v2
+    appVersion: 13.3-alpine
+    created: "2021-08-08T15:05:49.719904747Z"
+    description: Posgres deployment for use as Terraform state backend
+    digest: 0560b85d84ca10b7e084e33289c14cfd190f5f0c64294dff56441fbb4a6bc2c8
+    name: tfstate-postgres
+    type: application
+    urls:
+    - https://github.com/LKummer/Helm-Charts/releases/download/tfstate-postgres-0.1.0/tfstate-postgres-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-08-08T15:05:49.719950249Z"
