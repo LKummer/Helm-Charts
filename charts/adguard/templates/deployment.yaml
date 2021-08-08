@@ -1,0 +1,152 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "adguard.fullname" . }}
+  labels:
+    {{- include "adguard.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "adguard.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "adguard.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      # Workaround to ConfigMap volumes being write only.
+      initContainers:
+        - name: {{ include "adguard.fullname" . }}-copy-config
+          image: busybox:1.33.1-musl
+          command:
+            - sh
+            - -c
+          args:
+            - cp /mnt/config/AdGuardHome.yaml /mnt/config-rw
+          volumeMounts:
+            - name: adguard-config
+              mountPath: '/mnt/config'
+            - name: adguard-config-rw
+              mountPath: '/mnt/config-rw'
+      containers:
+        - name: {{ include "adguard.fullname" . }}
+          securityContext:
+            {{- toYaml .Values.adguard.securityContext | nindent 12 }}
+          image: "{{ .Values.adguard.image.repository }}:{{ .Values.adguard.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.adguard.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: dns-tcp
+              containerPort: 53
+              protocol: TCP
+            - name: dns-udp
+              containerPort: 53
+              protocol: UDP
+          volumeMounts:
+            - name: adguard-config-rw
+              mountPath: '/opt/adguardhome/conf'
+          livenessProbe:
+            httpGet:
+              path: /login.html
+              port: http
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /login.html
+              port: http
+            initialDelaySeconds: 30
+          startupProbe:
+            httpGet:
+              path: /login.html
+              port: http
+            failureThreshold: 10
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.adguard.resources | nindent 12 }}
+        {{- $name := include "adguard.fullname" . }}
+        {{- with .Values.prometheusExporter }}
+        {{- if .enabled }}
+        - name: {{ $name }}-exporter
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          securityContext:
+            {{- toYaml .securityContext | nindent 12 }}
+          ports:
+            - name: metrics
+              containerPort: {{ .config.port }}
+              protocol: TCP
+          env:
+            - name: ADGUARD_PROTOCOL
+              value: http
+            - name: ADGUARD_HOSTNAME
+              value: localhost
+            - name: SERVER_PORT
+              value: "{{ .config.port }}"
+            - name: ADGUARD_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $name }}-exporter
+                  key: user
+            - name: ADGUARD_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $name }}-exporter
+                  key: password
+            - name: INTERVAL
+              value: "{{ .config.interval }}"
+            - name: LOG_LIMIT
+              value: "{{ .config.log_limit }}"
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: metrics
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: metrics
+            initialDelaySeconds: 30
+          startupProbe:
+            httpGet:
+              path: /metrics
+              port: metrics
+            failureThreshold: 10
+            periodSeconds: 10
+          resources:
+            {{- toYaml .resources | nindent 12 }}
+        {{- end }}
+        {{- end }}
+      volumes:
+        - name: adguard-config
+          configMap:
+            name: {{ include "adguard.fullname" . }}
+            items:
+              - key: adguard.yaml
+                path: AdGuardHome.yaml
+        - name: adguard-config-rw
+          emptyDir: {}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

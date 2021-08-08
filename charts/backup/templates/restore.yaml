@@ -1,0 +1,52 @@
+{{- $fullname := include "backup.fullname" . }}
+{{- $labels := include "backup.labels" . }}
+{{- $image := include "backup.image" . }}
+{{- $claims := .Values.volumeClaims.claims }}
+{{- range .Values.repositories }}
+{{- $repoName := .name }}
+{{- with .restore }}
+{{- if .enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $fullname }}-restore-{{ $repoName }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{ $repoName }}-restore
+          {{- $image | nindent 10 }}
+          command: ['restic']
+          args:
+            - 'restore'
+            - '{{ .snapshot | default "latest" }}'
+            - '--target'
+            - '/'
+          env:
+            - name: RESTIC_REPOSITORY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullname }}-repo-{{ $repoName }}
+                  key: address
+            - name: RESTIC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullname }}-repo-{{ $repoName }}
+                  key: password
+          volumeMounts:
+          {{- range $claims }}
+            - mountPath: /data/{{ .repositoryPath }}
+              name: {{ .name }}
+          {{- end }}
+      volumes:
+      {{- range $claims }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ .name }}
+      {{- end }}
+      restartPolicy: {{ .restartPolicy | default "Never" }}
+{{- end }}
+{{- end }}
+{{- end }}

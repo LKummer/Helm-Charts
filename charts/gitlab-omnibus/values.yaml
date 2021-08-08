@@ -1,0 +1,105 @@
+# Default values for gitlab-omnibus.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: gitlab/gitlab-ee
+  tag: ""
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+
+# Pod securityContext.
+podSecurityContext: {}
+  # fsGroup: 2000
+
+volumeClaims:
+  config:
+    enabled: true
+    name: gitlab-omnibus-config
+    annotations: {}
+    resources:
+      requests:
+        storage: 100Mi
+    volumeMode: Filesystem
+    accessModes:
+      - ReadWriteOnce
+    selector: {}
+  data:
+    enabled: true
+    name: gitlab-omnibus-data
+    annotations: {}
+    resources:
+      requests:
+        storage: 25Gi
+    volumeMode: Filesystem
+    accessModes:
+      - ReadWriteOnce
+    selector: {}
+
+# Container securityContext.
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  # type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  hosts:
+    gitlab:
+      url: git.example.com
+    pages:
+      url: '*.pages.example.com'
+    registry:
+      url: docker.example.com
+  annotations: {}
+  #  kubernetes.io/ingress.class: nginx
+  #  kubernetes.io/tls-acme: "true"
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+metrics:
+  gitlab:
+    whitelist: "['10.42.0.0/24', '127.0.0.0/8', '192.168.0.1']"
+  workhorse:
+    port: 9229
+  gitaly:
+    port: 9236
+
+podMonitor:
+  enabled: false
+  labels:
+    release: prometheus
+
+timezone: Asia/Jerusalem

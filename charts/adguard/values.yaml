@@ -1,0 +1,100 @@
+# Default values for adguard.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+adguard:
+  image:
+    repository: adguard/adguardhome
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+  resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  config:
+    users:
+      - name: admin
+        password: y0urpassword
+    upstream_dns:
+      - https://dns.cloudflare.com/dns-query
+    rewrites: []
+    # - domain: '*.example.com'
+    #   answer: '192.168.0.100'
+    # See how to write hosts blocklists
+    # https://github.com/AdguardTeam/AdGuardHome/wiki/Hosts-Blocklists
+    user_rules: []
+    # - '@@||example.com^'
+
+prometheusExporter:
+  enabled: true
+
+  image:
+    repository: ebrianne/adguard-exporter
+    pullPolicy: IfNotPresent
+    tag: v1.13
+  
+  securityContext: {}
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+  
+  config:
+    port: 9617
+    interval: 10s
+    log_limit: 10000
+
+imagePullSecrets: []
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+ingress:
+  enabled: true
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: dns.kummer.local
+  tls: []
+  # - secretName: dns-tls
+  #   hosts:
+  #     - dns.kummer.lan
+
+podMonitor:
+  enabled: false
+  labels:
+    release: prometheus
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

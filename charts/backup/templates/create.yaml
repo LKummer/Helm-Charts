@@ -1,0 +1,38 @@
+{{- $fullname := include "backup.fullname" . }}
+{{- $labels := include "backup.labels" . }}
+{{- $image := include "backup.image" . }}
+{{- range .Values.repositories }}
+{{- $repoName := .name }}
+{{- with .create }}
+{{- if .enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $fullname }}-create-{{ $repoName }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  template:
+    spec:
+      containers:
+        - name: create-{{ $repoName }}
+          {{- $image | nindent 10 }}
+          command: ['restic']
+          args:
+            - init
+          env:
+            - name: RESTIC_REPOSITORY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullname }}-repo-{{ $repoName }}
+                  key: address
+            - name: RESTIC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullname }}-repo-{{ $repoName }}
+                  key: password
+      restartPolicy: {{ .restartPolicy | default "Never" }}
+---
+{{- end }}
+{{- end }}
+{{- end }}

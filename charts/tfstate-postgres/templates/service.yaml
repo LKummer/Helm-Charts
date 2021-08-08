@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tfstate-postgres.fullname" . }}
+  labels:
+    {{- include "tfstate-postgres.labels" . | nindent 4 }}
+spec:
+  type: LoadBalancer
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: db
+      protocol: TCP
+      name: db
+  selector:
+    {{- include "tfstate-postgres.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "gitlab-omnibus.fullname" . }}
+  labels:
+    {{- include "gitlab-omnibus.labels" . | nindent 4 }}
+data:
+  gitlab-omnibus-config: |
+    gitlab_rails['time_zone'] = '{{ .Values.timezone }}'
+    gitlab_rails['packages_enabled'] = true
+
+    letsencrypt['enable'] = false
+  {{ with .Values.ingress.hosts.gitlab }}
+    # Gitlab.
+    external_url 'https://{{ .url }}'
+    nginx['listen_port'] = 80
+    nginx['listen_https'] = false
+  {{ end -}}
+  {{ with .Values.ingress.hosts.registry }}
+    # Registry.
+    registry_external_url 'https://{{ .url }}'
+    registry_nginx['listen_port'] = 80
+    registry_nginx['listen_https'] = false
+  {{ end -}}
+  {{ with .Values.ingress.hosts.pages }}
+    # Pages.
+    pages_external_url 'https://{{ .url | trimPrefix "*." }}'
+    pages_nginx['listen_port'] = 80
+    pages_nginx['listen_https'] = false
+    gitlab_pages['inplace_chroot'] = true
+  {{ end }}
+    # Monitoring.
+    prometheus_monitoring['enable'] = false
+  {{- with .Values.metrics.gitlab }}
+    gitlab_rails['monitoring_whitelist'] = {{ .whitelist }}
+  {{- end }}
+  {{- with .Values.metrics.workhorse }}
+    gitlab_workhorse['prometheus_listen_addr'] = '0.0.0.0:{{ .port }}'
+  {{- end }}
+  {{- with .Values.metrics.gitaly }}
+    gitaly['prometheus_listen_addr'] = '0.0.0.0:{{ .port }}'
+  {{- end }}

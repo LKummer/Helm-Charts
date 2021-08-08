@@ -1,0 +1,15 @@
+{{- if .Values.podMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ include "adguard.fullname" . }}
+  labels:
+    {{- include "adguard.selectorLabels" . | nindent 4 }}
+    {{- toYaml .Values.podMonitor.labels | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "adguard.selectorLabels" . | nindent 6 }}
+  podMetricsEndpoints:
+    - port: metrics
+{{- end }}

@@ -1,0 +1,26 @@
+{{- $labels := include "backup.labels" . }}
+{{- if .Values.volumeClaims }}
+{{- range .Values.volumeClaims.claims }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- $labels | nindent 4 }}
+  {{- with .annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  resources:
+    {{- toYaml .resources | nindent 4 }}
+  volumeMode: {{ .volumeMode }}
+  accessModes:
+    {{- toYaml .accessModes | nindent 4 }}
+  {{- with .selector }}
+  selector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+---
+{{- end }}
+{{- end }}

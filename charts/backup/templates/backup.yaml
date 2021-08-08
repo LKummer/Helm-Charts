@@ -1,0 +1,53 @@
+{{- $fullname := include "backup.fullname" . }}
+{{- $labels := include "backup.labels" . }}
+{{- $image := include "backup.image" . }}
+{{- $claims := .Values.volumeClaims.claims }}
+{{- range .Values.repositories }}
+{{- $repoName := .name }}
+{{- with .backup }}
+{{- if .enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ $fullname }}-backup-{{ $repoName }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  schedule: {{ .schedule }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: {{ $repoName }}-backup
+              {{- $image | nindent 14 }}
+              command: ['restic']
+              args:
+                - backup
+                - /data
+              env:
+                - name: RESTIC_REPOSITORY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ $fullname }}-repo-{{ $repoName }}
+                      key: address
+                - name: RESTIC_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ $fullname }}-repo-{{ $repoName }}
+                      key: password
+              volumeMounts:
+              {{- range $claims }}
+                - mountPath: /data/{{ .repositoryPath }}
+                  name: {{ .name }}
+              {{- end }}
+          volumes:
+          {{- range $claims }}
+            - name: {{ .name }}
+              persistentVolumeClaim:
+                claimName: {{ .name }}
+          {{- end }}
+          restartPolicy: {{ .restartPolicy | default "OnFailure" }}
+{{- end }}
+{{- end }}
+{{- end }}

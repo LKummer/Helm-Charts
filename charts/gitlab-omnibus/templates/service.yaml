@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "gitlab-omnibus.fullname" . }}
+  labels:
+    {{- include "gitlab-omnibus.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.service.type }}
+  type: {{ . }}
+  {{- end }}
+  ports:
+    - port: 80
+      targetPort: {{ .Values.service.port }}
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "gitlab-omnibus.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,47 @@
+{{- if .Values.volumeClaims.config.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.volumeClaims.config.name }}
+  labels:
+    {{- include "gitlab-omnibus.labels" . | nindent 4 }}
+  {{- with .Values.volumeClaims.config.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  resources:
+    {{- toYaml .Values.volumeClaims.config.resources | nindent 4 }}
+  volumeMode: {{ .Values.volumeClaims.config.volumeMode }}
+  accessModes:
+    {{- toYaml .Values.volumeClaims.config.accessModes | nindent 4 }}
+  {{- with .Values.volumeClaims.config.selector }}
+  selector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
+{{- if and .Values.volumeClaims.config.enabled .Values.volumeClaims.data.enabled }}
+---
+{{- end }}
+{{- if .Values.volumeClaims.data.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.volumeClaims.data.name }}
+  labels:
+    {{- include "gitlab-omnibus.labels" . | nindent 4 }}
+  {{- with .Values.volumeClaims.data.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  resources:
+    {{- toYaml .Values.volumeClaims.data.resources | nindent 4 }}
+  volumeMode: {{ .Values.volumeClaims.data.volumeMode }}
+  accessModes:
+    {{- toYaml .Values.volumeClaims.data.accessModes | nindent 4 }}
+  {{- with .Values.volumeClaims.data.selector }}
+  selector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

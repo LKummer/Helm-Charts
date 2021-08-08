@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "gitlab-omnibus.fullname" . }}
+  labels:
+    {{- include "gitlab-omnibus.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "gitlab-omnibus.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "gitlab-omnibus.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: GITLAB_OMNIBUS_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "gitlab-omnibus.fullname" . }}
+                  key: gitlab-omnibus-config
+          volumeMounts:
+            - mountPath: /etc/gitlab
+              name: config
+            - mountPath: /var/opt/gitlab
+              name: data
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: wh-metrics  
+              containerPort: {{ .Values.metrics.workhorse.port }}
+              protocol: TCP
+            - name: gitaly-metrics  
+              containerPort: {{ .Values.metrics.gitaly.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /-/liveness
+              port: http
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /-/readiness?all=1
+              port: http
+            initialDelaySeconds: 30
+          startupProbe:
+            httpGet:
+              path: /-/readiness?all=1
+              port: http
+            failureThreshold: 30
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ .Values.volumeClaims.config.name }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Values.volumeClaims.data.name }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

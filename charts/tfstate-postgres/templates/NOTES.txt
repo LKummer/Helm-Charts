@@ -1,0 +1,4 @@
+You should be able to connect to Postgres through port {{ .Values.service.port }}.
+{{- if or (eq .Values.user.user "pleasechange") (eq .Values.user.password "pleasechange") }}
+IMPORTANT: You have left user.user or user.password set to their default. Please set user.user and user.password values.
+{{- end }}

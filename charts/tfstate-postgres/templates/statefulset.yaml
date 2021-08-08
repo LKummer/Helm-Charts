@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "tfstate-postgres.fullname" . }}
+  labels:
+    {{- include "tfstate-postgres.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "tfstate-postgres.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "tfstate-postgres.fullname" . }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "tfstate-postgres.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: postgres
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "tfstate-postgres.fullname" . }}-user
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "tfstate-postgres.fullname" . }}-user
+                  key: password
+          ports:
+            - name: db
+              containerPort: 5432
+              protocol: TCP
+          volumeMounts:
+            - name: {{ include "tfstate-postgres.fullname" . }}
+              mountPath: /var/lib/postgresql/data
+          livenessProbe:
+            exec:
+              command:
+                - psql
+                - --no-password
+                - --username
+                - {{ .Values.user.user }}
+                - --dbname
+                - {{ .Values.user.user }}
+                - --command
+                - SELECT 1
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+          readinessProbe:
+            exec:
+              command:
+                - psql
+                - --no-password
+                - --username
+                - {{ .Values.user.user }}
+                - --dbname
+                - {{ .Values.user.user }}
+                - --command
+                - SELECT 1
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ include "tfstate-postgres.fullname" . }}
+        {{- with .Values.pvcAnnotations }}
+        annotations:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      spec:
+        accessModes: [ ReadWriteOnce ]
+        storageClassName: {{ .Values.pvcStorageClassName }}
+        resources:
+          requests:
+            storage: 1Gi

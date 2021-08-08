@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+{{- if .Values.clusterIssuer.nameOverride }}
+  name: {{ .Values.clusterIssuer.nameOverride }}
+{{- else }}
+  name: {{ include "own-ca.fullname" . }}-ca
+{{- end }}
+  labels:
+    {{- include "own-ca.labels" . | nindent 4 }}
+spec:
+  ca:
+    secretName: {{ include "own-ca.fullname" . }}-ca

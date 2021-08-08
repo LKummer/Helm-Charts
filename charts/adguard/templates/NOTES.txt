@@ -1,0 +1,26 @@
+{{- if .Values.ingress.enabled }}
+Assuming you configured DNS correctly, Adguard Home web panel can be reached by going to:
+{{- range $host := .Values.ingress.hosts }}
+  {{- range .paths }}
+  - http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
+  {{- end }}
+{{- end }}
+{{- else }}
+Ingress was not configured, Adguard Home control panel can be reached by running:
+{{- $namespace := ternary false .Release.Namespace (eq .Release.Namespace "default") }}
+  $ kubectl port-forward {{ with $namespace }}--namespace {{ . }}{{ end }} {{ include "adguard.fullname" . }}-http
+{{- end }}
+You can log in to the control panel with the users you configured:
+{{- range .Values.adguard.config.users }}
+  - {{ .name }}
+{{- end}}
+Adguard Home should be ready for DNS queries, ensure it works by running:
+{{- if empty .Values.adguard.config.rewrites }}
+  $ dig @node-ip www.google.com
+{{- else }}
+  $ dig @<node-ip> {{ (first .Values.adguard.config.rewrites).domain | replace "*." "foo." }}
+The DNS query should return "{{ (first .Values.adguard.config.rewrites).answer }}".
+{{- end}}
+
+IMPORTANT NOTE: This chart does not configure persistent volume claims, meaning ALL
+configuration done through the web panel WILL NOT persist.

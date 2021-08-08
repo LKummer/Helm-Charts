@@ -1,0 +1,53 @@
+# Default values for backup.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: restic/restic
+  tag: ""
+  pullPolicy: IfNotPresent
+
+repositories:
+  - name: 'rest'
+    address: 'rest:http://user:pass@address:8000/repo'
+    password: 'verysecret'
+    create:
+      enabled: false
+      restartPolicy: Never
+    restore:
+      enabled: false
+      snapshot: latest
+      restartPolicy: Never
+    backup:
+      enabled: false
+      schedule: '0 4 * * *'
+      restartPolicy: OnFailure
+    forget:
+      enabled: false
+      schedule: '30 4 * * *'
+      keep:
+        last: ""
+        hourly: ""
+        daily: ""
+        weekly: ""
+        monthly: ""
+        yearly: ""
+        within: ""
+      restartPolicy: OnFailure
+
+volumeClaims:
+  enabled: true
+  claims: []
+  # - name: example
+  #   repositoryPath: example
+  #   annotations: {}
+  #   resources:
+  #     requests:
+  #       storage: 25Gi
+  #   volumeMode: Filesystem
+  #   accessModes:
+  #     - ReadWriteOnce
+  #   selector: {}
