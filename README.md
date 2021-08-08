@@ -17,4 +17,4 @@ $ helm repo update
 ```
 
 Once the repository is added and updated, you are ready to install charts.
-For more information on the available charts, [check out the repository's documentation](https://github.com/LKummer/Helm-Charts).
+For more information on the available charts, [check out the repository's documentation](https://lkummer.github.io/Helm-Charts/).
