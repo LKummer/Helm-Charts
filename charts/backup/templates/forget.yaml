@@ -28,7 +28,7 @@ spec:
                 {{- range $key, $value := . }}
                 {{- if $value }}
                 - --keep-{{ $key }}
-                - {{ $value }}
+                - '{{ $value }}'
                 {{- end }}
                 {{- end }}
                 {{- end }}

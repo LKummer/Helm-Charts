@@ -138,8 +138,10 @@ repositories:
       enabled: true
     backup:
       enabled: true
+      schedule: 30 8 * * *
     forget:
       enabled: true
+      schedule: 30 8 * * *
       keep:
         daily: 90
   
