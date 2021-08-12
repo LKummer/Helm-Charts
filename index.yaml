@@ -14,6 +14,16 @@ entries:
   backup:
   - apiVersion: v2
     appVersion: 0.12.0
+    created: "2021-08-12T21:33:11.917144564Z"
+    description: Restic based backup and restore solution for persistent volume claims.
+    digest: 236cb9ed14b21ca9d1e79f67723e9f1d144094a04b29066f84a3bcd52e626d8b
+    name: backup
+    type: application
+    urls:
+    - https://github.com/LKummer/Helm-Charts/releases/download/backup-1.0.1/backup-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 0.12.0
     created: "2021-08-08T15:05:49.316683918Z"
     description: Restic based backup and restore solution for persistent volume claims.
     digest: 0a6c31f52369ef914b9e592dd4f5a7f5c5ac2dae9eaced3f9591ef3cf2e5d383
@@ -66,4 +76,4 @@ entries:
     urls:
     - https://github.com/LKummer/Helm-Charts/releases/download/tfstate-postgres-0.1.0/tfstate-postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2021-08-08T15:05:49.719950249Z"
+generated: "2021-08-12T21:33:11.917152964Z"
