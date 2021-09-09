@@ -1,0 +1,18 @@
+{{- if .Values.volumeClaim.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.volumeClaim.name }}
+  labels:
+    {{- include "gotify.labels" . | nindent 4 }}
+spec:
+  resources:
+    {{- toYaml .Values.volumeClaim.resources | nindent 4 }}
+  volumeMode: {{ .Values.volumeClaim.volumeMode }}
+  accessModes:
+    {{- toYaml .Values.volumeClaim.accessModes | nindent 4 }}
+  {{- with .Values.volumeClaim.selector }}
+  selector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
