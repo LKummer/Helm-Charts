@@ -54,6 +54,17 @@ entries:
     urls:
     - https://github.com/LKummer/Helm-Charts/releases/download/gitlab-omnibus-0.1.0/gitlab-omnibus-0.1.0.tgz
     version: 0.1.0
+  gotify:
+  - apiVersion: v2
+    appVersion: 2.0.23
+    created: "2021-09-09T15:54:12.94170862Z"
+    description: Gotify server
+    digest: 082785db64f4930c4ae090b9324e137def1b32b0ec5d90ab2cb1e2ea50d90440
+    name: gotify
+    type: application
+    urls:
+    - https://github.com/LKummer/Helm-Charts/releases/download/gotify-0.1.0/gotify-0.1.0.tgz
+    version: 0.1.0
   own-ca:
   - apiVersion: v2
     appVersion: v1.4.0
@@ -76,4 +87,4 @@ entries:
     urls:
     - https://github.com/LKummer/Helm-Charts/releases/download/tfstate-postgres-0.1.0/tfstate-postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2021-08-12T21:33:11.917152964Z"
+generated: "2021-09-09T15:54:12.94172192Z"
