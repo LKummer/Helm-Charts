@@ -281,6 +281,16 @@
 </tr>
 </tbody>
 </table>
+<h2 id="update-instructions">Update Instructions</h2>
+<p>When updating from version <code>0.1.1</code> (Gitlab 13.10.2) to version <code>0.2.0</code> (Gitlab 14.2.3), follow the update path:</p>
+<ol>
+<li>Chart version <code>0.1.1</code> with default <code>image.tag</code>.</li>
+<li>Chart version <code>0.1.1</code> with <code>image.tag</code>=<code>13.12.11-ee.0</code>.</li>
+<li>Chart version <code>0.1.1</code> with <code>image.tag</code>=<code>14.0.10-ee.0</code>. Wait for background migrations to finish. Gitlab Pages will not work until updating the chart version later on.</li>
+<li>Chart version <code>0.1.1</code> with <code>image.tag</code>=<code>14.1.5-ee.0</code>.</li>
+<li>Chart version <code>0.1.1</code> with <code>image.tag</code>=<code>14.2.3-ee.0</code>. Wait for background migrations to finish.</li>
+<li>Chart version <code>0.2.0</code> with default <code>image.tag</code>. Gitlab Pages should work.</li>
+</ol>
 
 </section>
 
