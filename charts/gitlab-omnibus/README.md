@@ -94,3 +94,16 @@ The chart offers the following list of configuration values.
 | `podMonitor.enabled` | Enable PodMonitor. |
 | `podMonitor.labels` | PodMonitor labels. |
 | `timezone` | Gitlab time zone. |
+
+## Update Instructions
+
+When updating from version `0.1.1` (Gitlab 13.10.2) to version `0.2.0` (Gitlab 14.2.3), follow the update path:
+
+1. Chart version `0.1.1` with default `image.tag`.
+2. Chart version `0.1.1` with `image.tag`=`13.12.11-ee.0`.
+3. Chart version `0.1.1` with `image.tag`=`14.0.10-ee.0`. Wait for background migrations to finish. Gitlab Pages will not work until updating the chart version later on.
+4. Chart version `0.1.1` with `image.tag`=`14.1.5-ee.0`.
+5. Chart version `0.1.1` with `image.tag`=`14.2.3-ee.0`. Wait for background migrations to finish.
+6. Chart version `0.2.0` with default `image.tag`. Gitlab Pages should work.
+
+

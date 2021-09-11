@@ -27,7 +27,9 @@ data:
     pages_external_url 'https://{{ .url | trimPrefix "*." }}'
     pages_nginx['listen_port'] = 80
     pages_nginx['listen_https'] = false
-    gitlab_pages['inplace_chroot'] = true
+  {{- end }}
+  {{- with .Values.ingress.hosts.gitlab }}
+    gitlab_pages['internal_gitlab_server'] = 'http://{{ .url }}'
   {{ end }}
     # Monitoring.
     prometheus_monitoring['enable'] = false
