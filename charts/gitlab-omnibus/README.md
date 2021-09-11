@@ -95,9 +95,9 @@ The chart offers the following list of configuration values.
 | `podMonitor.labels` | PodMonitor labels. |
 | `timezone` | Gitlab time zone. |
 
-## Update Instructions
+## Upgrade Instructions
 
-When updating from version `0.1.1` (Gitlab 13.10.2) to version `0.2.0` (Gitlab 14.2.3), follow the update path:
+When updating from version `0.1.1` (Gitlab 13.10.2) to version `0.2.0` (Gitlab 14.2.3), follow the upgrade path:
 
 1. Chart version `0.1.1` with default `image.tag`.
 2. Chart version `0.1.1` with `image.tag`=`13.12.11-ee.0`.
@@ -106,4 +106,12 @@ When updating from version `0.1.1` (Gitlab 13.10.2) to version `0.2.0` (Gitlab 1
 5. Chart version `0.1.1` with `image.tag`=`14.2.3-ee.0`. Wait for background migrations to finish.
 6. Chart version `0.2.0` with default `image.tag`. Gitlab Pages should work.
 
+[Check out upgrade paths documentation](https://docs.gitlab.com/ee/update/index.html#upgrade-paths) for more information.
 
+Should the need to reconfigure Gitlab arise, open a shell in the Gitlab Omnibus container, stop Gitlab and reconfigure:
+
+```s
+$ kubectl exec -i -t example-gitlab-omnibus-xxxxxxxx-xxxxx -- /bin/bash
+$ gitlab ctl stop
+$ gitlab-ctl reconfigure
+```
