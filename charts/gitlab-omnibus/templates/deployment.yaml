@@ -6,6 +6,8 @@ metadata:
     {{- include "gitlab-omnibus.labels" . | nindent 4 }}
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       {{- include "gitlab-omnibus.selectorLabels" . | nindent 6 }}
