@@ -46,6 +46,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /etc/gotify/
+            - name: data
+              mountPath: /app/data
       volumes:
         - name: config
           configMap:
