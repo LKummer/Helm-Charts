@@ -192,12 +192,20 @@
 <td>Service related options.</td>
 </tr>
 <tr>
-<td><code>service.port</code></td>
-<td>Service target port.</td>
+<td><code>httpService.port</code></td>
+<td>HTTP Service port.</td>
 </tr>
 <tr>
-<td><code>service.type</code></td>
-<td>Service type.</td>
+<td><code>httpService.type</code></td>
+<td>HTTP Service type.</td>
+</tr>
+<tr>
+<td><code>sshService.port</code></td>
+<td>SSH Service port.</td>
+</tr>
+<tr>
+<td><code>sshService.type</code></td>
+<td>SSH Service type.</td>
 </tr>
 <tr>
 <td><code>ingress</code></td>
@@ -282,7 +290,7 @@
 </tbody>
 </table>
 <h2 id="upgrade-instructions">Upgrade Instructions</h2>
-<p>When updating from version <code>0.1.1</code> (Gitlab 13.10.2) to version <code>0.2.0</code> (Gitlab 14.2.3), follow the upgrade path:</p>
+<p>When updating from version <code>0.1.1</code> (Gitlab 13.10.2) to version <code>0.3.0</code> (Gitlab 14.6.1), follow the upgrade path:</p>
 <ol>
 <li>Chart version <code>0.1.1</code> with default <code>image.tag</code>.</li>
 <li>Chart version <code>0.1.1</code> with <code>image.tag</code>=<code>13.12.11-ee.0</code>.</li>
@@ -290,6 +298,7 @@
 <li>Chart version <code>0.1.1</code> with <code>image.tag</code>=<code>14.1.5-ee.0</code>.</li>
 <li>Chart version <code>0.1.1</code> with <code>image.tag</code>=<code>14.2.3-ee.0</code>. Wait for background migrations to finish.</li>
 <li>Chart version <code>0.2.0</code> with default <code>image.tag</code>. Gitlab Pages should work.</li>
+<li>Chart version <code>0.3.0</code> with default <code>image.tag</code>.</li>
 </ol>
 <p><a href="https://docs.gitlab.com/ee/update/index.html#upgrade-paths">Check out upgrade paths documentation</a> for more information.</p>
 <p>Should the need to reconfigure Gitlab arise, open a shell in the Gitlab Omnibus container, stop Gitlab and reconfigure:</p>
