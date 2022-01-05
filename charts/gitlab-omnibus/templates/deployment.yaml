@@ -51,6 +51,9 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+            - name: ssh
+              containerPort: 22
+              protocol: TCP
             - name: wh-metrics  
               containerPort: {{ .Values.metrics.workhorse.port }}
               protocol: TCP

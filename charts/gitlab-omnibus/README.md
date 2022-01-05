@@ -72,8 +72,10 @@ The chart offers the following list of configuration values.
 | `volumeClaims.data.selector` | Data persistent volume claim selector. |
 | `securityContext` | Container security context. |
 | `service` | Service related options. |
-| `service.port` | Service target port. |
-| `service.type` | Service type. |
+| `httpService.port` | HTTP Service port. |
+| `httpService.type` | HTTP Service type. |
+| `sshService.port` | SSH Service port. |
+| `sshService.type` | SSH Service type. |
 | `ingress` | Ingress related options. |
 | `ingress.enabled` | Enable ingress creation. |
 | `ingress.hosts` | Ingress hosts. |
@@ -97,7 +99,7 @@ The chart offers the following list of configuration values.
 
 ## Upgrade Instructions
 
-When updating from version `0.1.1` (Gitlab 13.10.2) to version `0.2.0` (Gitlab 14.2.3), follow the upgrade path:
+When updating from version `0.1.1` (Gitlab 13.10.2) to version `0.3.0` (Gitlab 14.6.1), follow the upgrade path:
 
 1. Chart version `0.1.1` with default `image.tag`.
 2. Chart version `0.1.1` with `image.tag`=`13.12.11-ee.0`.
@@ -105,6 +107,7 @@ When updating from version `0.1.1` (Gitlab 13.10.2) to version `0.2.0` (Gitlab 1
 4. Chart version `0.1.1` with `image.tag`=`14.1.5-ee.0`.
 5. Chart version `0.1.1` with `image.tag`=`14.2.3-ee.0`. Wait for background migrations to finish.
 6. Chart version `0.2.0` with default `image.tag`. Gitlab Pages should work.
+7. Chart version `0.3.0` with default `image.tag`.
 
 [Check out upgrade paths documentation](https://docs.gitlab.com/ee/update/index.html#upgrade-paths) for more information.
 
