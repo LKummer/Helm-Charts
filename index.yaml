@@ -45,6 +45,16 @@ entries:
     version: 0.1.0
   gitlab-omnibus:
   - apiVersion: v2
+    appVersion: 14.6.1-ee.0
+    created: "2022-01-05T16:10:43.189270455Z"
+    description: Gitlab Omnibus deployment
+    digest: cebc4148dcfc24b10e3879fea137a0b806f98157e2064e632aeec02207635789
+    name: gitlab-omnibus
+    type: application
+    urls:
+    - https://github.com/LKummer/Helm-Charts/releases/download/gitlab-omnibus-0.3.0/gitlab-omnibus-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
     appVersion: 14.2.3-ee.0
     created: "2021-09-13T16:30:00.457702208Z"
     description: Gitlab Omnibus deployment
@@ -127,4 +137,4 @@ entries:
     urls:
     - https://github.com/LKummer/Helm-Charts/releases/download/tfstate-postgres-0.1.0/tfstate-postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2021-09-13T16:30:00.62948234Z"
+generated: "2022-01-05T16:10:43.189298755Z"
