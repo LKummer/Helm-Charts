@@ -99,7 +99,7 @@ The chart offers the following list of configuration values.
 
 ## Upgrade Instructions
 
-When updating from version `0.1.1` (Gitlab 13.10.2) to version `0.3.0` (Gitlab 14.2.3), follow the upgrade path:
+When updating from version `0.1.1` (Gitlab 13.10.2) to version `0.3.0` (Gitlab 14.6.1), follow the upgrade path:
 
 1. Chart version `0.1.1` with default `image.tag`.
 2. Chart version `0.1.1` with `image.tag`=`13.12.11-ee.0`.
