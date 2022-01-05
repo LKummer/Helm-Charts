@@ -5,13 +5,31 @@ metadata:
   labels:
     {{- include "gitlab-omnibus.labels" . | nindent 4 }}
 spec:
-  {{- with .Values.service.type }}
+  {{- with .Values.httpService.type }}
   type: {{ . }}
   {{- end }}
   ports:
-    - port: 80
-      targetPort: {{ .Values.service.port }}
+    - port: {{ .Values.httpService.port }}
+      targetPort: http
       protocol: TCP
       name: http
+  selector:
+    {{- include "gitlab-omnibus.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "gitlab-omnibus.fullname" . }}-ssh
+  labels:
+    {{- include "gitlab-omnibus.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.sshService.type }}
+  type: {{ . }}
+  {{- end }}
+  ports:
+    - port: {{ .Values.sshService.port }}
+      targetPort: ssh
+      protocol: TCP
+      name: ssh
   selector:
     {{- include "gitlab-omnibus.selectorLabels" . | nindent 4 }}

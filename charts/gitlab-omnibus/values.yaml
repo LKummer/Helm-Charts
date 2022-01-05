@@ -50,9 +50,13 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
+httpService:
   # type: ClusterIP
   port: 80
+
+sshService:
+  type: LoadBalancer
+  port: 22
 
 ingress:
   enabled: true
