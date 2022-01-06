@@ -1,0 +1,18 @@
+ClusterIssuer named `{{ .Values.clusterIssuerName }}` can now be used to issue certificates.
+
+Usage example:
+  apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      cert-manager.io/cluster-issuer: {{ .Values.clusterIssuerName }}
+  ...
+  spec:
+    tls:
+      - hosts:
+        {{- with .Values.acme.zones }}
+          - {{ first . }}
+        {{- else }}
+          ...
+        {{- end }}
+        secretName: example-cert

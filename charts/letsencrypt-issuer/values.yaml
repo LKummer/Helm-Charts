@@ -1,0 +1,21 @@
+# Default values for letsencrypt-issuer.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+clusterIssuerName: letsencrypt
+
+acme:
+  # Let's Encrypt's staging server.
+  # Read more: https://letsencrypt.org/docs/staging-environment/
+  server: https://acme-staging-v02.api.letsencrypt.org/directory
+  email: change@example.com
+#   DNS Zones to issue Certificates for.
+# zones:
+#   - 'example.com'
+
+cloudflare:
+  email: change@example.com
+  token: pleasechange
