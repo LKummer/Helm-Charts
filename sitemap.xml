@@ -14,6 +14,8 @@
   </url><url>
     <loc>https://lkummer.github.io/Helm-Charts/gotify/</loc>
   </url><url>
+    <loc>https://lkummer.github.io/Helm-Charts/letsencrypt-issuer/</loc>
+  </url><url>
     <loc>https://lkummer.github.io/Helm-Charts/</loc>
   </url><url>
     <loc>https://lkummer.github.io/Helm-Charts/own-ca/</loc>
