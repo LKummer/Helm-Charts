@@ -35,20 +35,6 @@ $ helm upgrade example homelab/backup --file values.</description>
     </item>
     
     <item>
-      <title>debug-webserver</title>
-      <link>https://lkummer.github.io/Helm-Charts/debug-webserver/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://lkummer.github.io/Helm-Charts/debug-webserver/</guid>
-      <description>Prerequisites Add the repository to Helm:
-$ helm repo add https://lkummer.github.io/Helm-Charts $ helm repo update Deploy the Chart Create a values.yaml file with values you wish to override.
-Install the chart:
-$ helm install example homelab/debug-webserver --file values.yaml Upgrade the Chart Upgrade the chart:
-$ helm upgrade example homelab/debug-webserver --file values.yaml Delete the Chart Delete the chart:
-$ helm delete example Configuration The chart offers the following list of configuration values.</description>
-    </item>
-    
-    <item>
       <title>gitlab-omnibus</title>
       <link>https://lkummer.github.io/Helm-Charts/gitlab-omnibus/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -88,18 +74,6 @@ Install the chart:
 $ helm install example homelab/letsencrypt-issuer --file values.yaml Upgrade the Chart Upgrade the chart:
 $ helm upgrade example homelab/letsencrypt-issuer --file values.yaml Delete the Chart Delete the chart:
 $ helm delete example Configuration The chart offers the following list of configuration values.</description>
-    </item>
-    
-    <item>
-      <title>own-ca</title>
-      <link>https://lkummer.github.io/Helm-Charts/own-ca/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://lkummer.github.io/Helm-Charts/own-ca/</guid>
-      <description>Prerequisites cert-manager has to be installed on the cluster.
-$ helm repo add jetstack https://charts.jetstack.io $ helm repo update $ helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.4.0 --set installCRDs=true Including it as a dependency in the chart causes issues with custom resource definitions.
-Add the repository to Helm:
-$ helm repo add homelab https://lkummer.github.io/Helm-Charts $ helm repo update Deploy the Chart Create a values.yaml file with values you wish to override.</description>
     </item>
     
     <item>
