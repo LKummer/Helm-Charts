@@ -107,7 +107,7 @@ When updating from version `0.1.1` (Gitlab 13.10.2) to version `0.3.0` (Gitlab 1
 4. Chart version `0.1.1` with `image.tag`=`14.1.5-ee.0`.
 5. Chart version `0.1.1` with `image.tag`=`14.2.3-ee.0`. Wait for background migrations to finish.
 6. Chart version `0.2.0` with default `image.tag`. Gitlab Pages should work.
-7. Chart version `0.3.0` with default `image.tag`.
+7. Chart version `0.3.1` with default `image.tag`.
 
 [Check out upgrade paths documentation](https://docs.gitlab.com/ee/update/index.html#upgrade-paths) for more information.
 
