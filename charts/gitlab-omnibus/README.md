@@ -115,6 +115,6 @@ Should the need to reconfigure Gitlab arise, open a shell in the Gitlab Omnibus 
 
 ```s
 $ kubectl exec -i -t example-gitlab-omnibus-xxxxxxxx-xxxxx -- /bin/bash
-$ gitlab ctl stop
+$ gitlab-ctl stop
 $ gitlab-ctl reconfigure
 ```
