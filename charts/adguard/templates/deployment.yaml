@@ -60,19 +60,26 @@ spec:
             - name: adguard-config-rw
               mountPath: '/opt/adguardhome/conf'
           livenessProbe:
-            httpGet:
-              path: /login.html
-              port: http
+            exec:
+              command:
+                - nslookup
+                - '{{ (first .Values.adguard.config.rewrites).domain | default "example.com" | replace "*." "foo." }}'
+                - '127.0.0.1'
             initialDelaySeconds: 30
           readinessProbe:
-            httpGet:
-              path: /login.html
-              port: http
+            exec:
+              command:
+                - nslookup
+                - '{{ (first .Values.adguard.config.rewrites).domain | default "example.com" | replace "*." "foo." }}'
+                - '127.0.0.1'
             initialDelaySeconds: 30
           startupProbe:
-            httpGet:
-              path: /login.html
-              port: http
+            exec:
+              command:
+                - nslookup
+                - '{{ (first .Values.adguard.config.rewrites).domain | default "example.com" | replace "*." "foo." }}'
+                - '127.0.0.1'
+            initialDelaySeconds: 30
             failureThreshold: 10
             periodSeconds: 10
           resources:

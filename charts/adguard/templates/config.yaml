@@ -18,7 +18,6 @@ data:
     block_auth_min: 15
     http_proxy: ""
     language: ""
-    rlimit_nofile: 0
     debug_pprof: false
     web_session_ttl: 720
     dns:
@@ -28,7 +27,7 @@ data:
       statistics_interval: 1
       querylog_enabled: true
       querylog_file_enabled: true
-      querylog_interval: 90
+      querylog_interval: 2160h
       querylog_size_memory: 1000
       anonymize_client_ip: false
       protection_enabled: true
@@ -57,9 +56,13 @@ data:
         - version.bind
         - id.server
         - hostname.bind
+      trusted_proxies:
+        - 127.0.0.0/8
+        - ::1/128
       cache_size: 4194304
       cache_ttl_min: 0
       cache_ttl_max: 0
+      cache_optimistic: false
       bogus_nxdomain: []
       aaaa_disabled: false
       enable_dnssec: false
@@ -135,5 +138,8 @@ data:
     log_max_size: 100
     log_max_age: 3
     log_file: ""
-    verbose: false
-    schema_version: 10
+    os:
+      group: ""
+      user: ""
+      rlimit_nofile: 0
+    schema_version: 12
