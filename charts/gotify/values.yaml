@@ -82,3 +82,11 @@ volumeClaim:
   accessModes:
     - ReadWriteOnce
   selector: {}
+
+backup:
+  enabled: true
+  repository:
+    s3AccessKey: example
+    s3SecretKey: example
+    repository: s3:http://s3.example.com/gotify-backup
+    repositoryPassword: example
