@@ -117,6 +117,16 @@ entries:
   gotify:
   - apiVersion: v2
     appVersion: 2.0.23
+    created: "2022-10-12T14:01:11.914058321Z"
+    description: Gotify server
+    digest: d1fc0cf3207121a57049c4a80acbc649bfaf2874bc1fc3d6271f9812ef0b752a
+    name: gotify
+    type: application
+    urls:
+    - https://github.com/LKummer/Helm-Charts/releases/download/gotify-0.2.0/gotify-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 2.0.23
     created: "2021-09-13T16:30:00.629452036Z"
     description: Gotify server
     digest: 9164fb8176cdd0368a8b71d841b9cb90439c16ab274d29ff279b845b2340826a
@@ -168,4 +178,4 @@ entries:
     urls:
     - https://github.com/LKummer/Helm-Charts/releases/download/tfstate-postgres-0.1.0/tfstate-postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2022-01-13T12:34:14.294940853Z"
+generated: "2022-10-12T14:01:11.914086122Z"
