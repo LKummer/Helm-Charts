@@ -85,6 +85,9 @@ volumeClaim:
 
 backup:
   enabled: true
+  restore:
+    enabled: true
+    snapshot: latest
   repository:
     s3AccessKey: example
     s3SecretKey: example
