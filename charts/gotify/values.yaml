@@ -85,6 +85,9 @@ volumeClaim:
 
 backup:
   enabled: true
+  backup:
+    enabled: true
+    schedule: '*/5 * * * *'
   restore:
     enabled: true
     snapshot: latest

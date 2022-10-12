@@ -49,3 +49,16 @@ Selector labels
 app.kubernetes.io/name: {{ include "gotify.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{- define "gotify.resticForgetCommand" -}}
+restic forget --prune --group-by path
+{{- $validKeys := list "last" "hourly" "daily" "weekly" "monthly" "yearly" "within" "within-hourly" "within-daily" "within-weekly" "within-monthly" "within-yearly" -}}
+{{- with .Values.backup.keep -}}
+{{- range $key, $value := . -}}
+{{- $kebabKey := kebabcase $key }}
+{{- if (not (has $kebabKey $validKeys)) -}}
+{{- fail "backup.keep key must be a valid Restic forget option." }}
+{{- end }} --keep-{{ $kebabKey }} {{ $value }}
+{{- end -}}
+{{- end -}}
+{{- end }}

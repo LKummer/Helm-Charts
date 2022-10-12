@@ -1,0 +1,51 @@
+{{- if (and .Values.backup.enabled .Values.backup.backup.enabled) }}
+{{- $fullname := include "gotify.fullname" .}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: '{{ $fullname }}-backup'
+  labels:
+    {{- include "gotify.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.backup.backup.schedule  | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{ .Values.volumeClaim.name }}
+          containers:
+            - name: restic-backup
+              image: restic/restic:0.14.0
+              command:
+                - sh
+                - -c
+                - restic check && restic backup /data && {{ include "gotify.resticForgetCommand" . }} && restic check
+              env:
+                - name: RESTIC_REPOSITORY
+                  valueFrom:
+                    secretKeyRef:
+                      name: '{{ $fullname }}-backup'
+                      key: resticRepository
+                - name: RESTIC_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: '{{ $fullname }}-backup'
+                      key: resticRepositoryPassword
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: '{{ $fullname }}-backup'
+                      key: s3AccessKey
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: '{{ $fullname }}-backup'
+                      key: s3SecretKey
+              volumeMounts:
+                - mountPath: /data/gotify-data
+                  name: data
+          restartPolicy: OnFailure
+{{- end }}

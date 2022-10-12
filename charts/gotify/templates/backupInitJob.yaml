@@ -3,7 +3,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ $fullname }}-backup-init
+  name: '{{ $fullname }}-backup-init'
   labels:
     {{- include "gotify.labels" . | nindent 4 }}
 spec:
@@ -20,22 +20,22 @@ spec:
             - name: RESTIC_REPOSITORY
               valueFrom:
                 secretKeyRef:
-                  name: {{ $fullname }}-backup
+                  name: '{{ $fullname }}-backup'
                   key: resticRepository
             - name: RESTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ $fullname }}-backup
+                  name: '{{ $fullname }}-backup'
                   key: resticRepositoryPassword
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{ $fullname }}-backup
+                  name: '{{ $fullname }}-backup'
                   key: s3AccessKey
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ $fullname }}-backup
+                  name: '{{ $fullname }}-backup'
                   key: s3SecretKey
       restartPolicy: OnFailure
 {{- end }}
