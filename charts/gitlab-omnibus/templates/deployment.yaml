@@ -1,7 +1,8 @@
+{{- $fullname := include "gitlab-omnibus.fullname" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "gitlab-omnibus.fullname" . }}
+  name: {{ $fullname }}
   labels:
     {{- include "gitlab-omnibus.labels" . | nindent 4 }}
 spec:
@@ -27,6 +28,42 @@ spec:
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if (and .Values.backup.enabled .Values.backup.restore.enabled) }}
+      initContainers:
+        - name: backup-restore
+          image: restic/restic:0.14.0
+          command:
+            - sh
+            - -c
+              # Restore when data directory is empty.
+            - '[ "$(ls -A /data/gitlab-data)" ] || restic restore {{ .Values.backup.restore.snapshot }} --target /'
+          env:
+            - name: RESTIC_REPOSITORY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullname }}-backup
+                  key: resticRepository
+            - name: RESTIC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullname }}-backup
+                  key: resticRepositoryPassword
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullname }}-backup
+                  key: s3AccessKey
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullname }}-backup
+                  key: s3SecretKey
+          volumeMounts:
+            - mountPath: /data/gitlab-config
+              name: config
+            - mountPath: /data/gitlab-data
+              name: data
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}

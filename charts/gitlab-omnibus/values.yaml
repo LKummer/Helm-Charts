@@ -107,3 +107,20 @@ podMonitor:
     release: prometheus
 
 timezone: Asia/Jerusalem
+
+backup:
+  enabled: false
+  backup:
+    enabled: true
+    schedule: '30 4 * * *'
+  restore:
+    enabled: true
+    snapshot: latest
+  keep:
+    withinDaily: 1y
+    withinMonthly: 5y
+  repository:
+    s3AccessKey: example
+    s3SecretKey: example
+    repository: s3:http://s3.example.com/gitlab-backup
+    repositoryPassword: example

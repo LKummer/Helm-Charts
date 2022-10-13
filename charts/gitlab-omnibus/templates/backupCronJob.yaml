@@ -1,0 +1,56 @@
+{{- if (and .Values.backup.enabled .Values.backup.backup.enabled) }}
+{{- $fullname := include "gitlab-omnibus.fullname" .}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: '{{ $fullname }}-backup'
+  labels:
+    {{- include "gitlab-omnibus.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.backup.backup.schedule  | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: config
+              persistentVolumeClaim:
+                claimName: {{ .Values.volumeClaims.config.name }}
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{ .Values.volumeClaims.data.name }}
+          containers:
+            - name: restic-backup
+              image: restic/restic:0.14.0
+              command:
+                - sh
+                - -c
+                - restic check && restic backup /data && {{ include "gitlab-omnibus.resticForgetCommand" . }} && restic check
+              env:
+                - name: RESTIC_REPOSITORY
+                  valueFrom:
+                    secretKeyRef:
+                      name: '{{ $fullname }}-backup'
+                      key: resticRepository
+                - name: RESTIC_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: '{{ $fullname }}-backup'
+                      key: resticRepositoryPassword
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: '{{ $fullname }}-backup'
+                      key: s3AccessKey
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: '{{ $fullname }}-backup'
+                      key: s3SecretKey
+              volumeMounts:
+                - mountPath: /data/gitlab-config
+                  name: config
+                - mountPath: /data/gitlab-data
+                  name: data
+          restartPolicy: OnFailure
+{{- end }}

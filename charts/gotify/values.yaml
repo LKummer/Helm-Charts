@@ -87,13 +87,13 @@ backup:
   enabled: false
   backup:
     enabled: true
-    schedule: '*/5 * * * *'
+    schedule: '30 4 * * *'
   restore:
     enabled: true
     snapshot: latest
   keep:
     withinDaily: 1y
-    withinMonthly: 12
+    withinMonthly: 5y
   repository:
     s3AccessKey: example
     s3SecretKey: example
