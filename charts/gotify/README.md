@@ -77,6 +77,17 @@ The chart offers the following list of configuration values.
 | `nodeSelector` | Pod node selector. |
 | `tolerations` | Pod tolerations. |
 | `affinity` | Pod affinity. |
+| `backup` | Backup and restore related options. |
+| `backup.enabled` | Enable backup and restore functionality when true. |
+| `backup.backup.enabled` | Enable backup CronJob when true. |
+| `backup.backup.schedule` | Backup CronJob schedule. |
+| `backup.restore.enabled` | Enable backup restoration when true. |
+| `backup.restore.snapshot` | Restic snapshot to restore from. |
+| `backup.keep` | Keep options passed to Restic forget command, see values for an example. |
+| `backup.repository.s3AccessKey` | S3 access key for backup storage authentication. |
+| `backup.repository.s3SecretKey` | S3 secret key for backup storage authentication. |
+| `backup.repository.repository` | Backup Restic repository, see values for an example. |
+| `backup.repository.repositoryPassword` | Backup Restic repository password. |
 
 ## Example
 
