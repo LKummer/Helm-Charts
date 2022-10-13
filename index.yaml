@@ -56,6 +56,16 @@ entries:
   gitlab-omnibus:
   - apiVersion: v2
     appVersion: 14.6.2-ee.0
+    created: "2022-10-13T00:25:08.928739081Z"
+    description: Gitlab Omnibus deployment
+    digest: 978af477a5327e1503e93f7c07cc1aca5213d2f06fa8e1ddcb3315b87352948c
+    name: gitlab-omnibus
+    type: application
+    urls:
+    - https://github.com/LKummer/Helm-Charts/releases/download/gitlab-omnibus-0.4.0/gitlab-omnibus-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 14.6.2-ee.0
     created: "2022-01-13T12:12:38.297787573Z"
     description: Gitlab Omnibus deployment
     digest: 49523dff6af45d51992bd2b7a9a47ebd6bf274c1f588fe69a6e99e71f97b2aa6
@@ -115,6 +125,16 @@ entries:
     - https://github.com/LKummer/Helm-Charts/releases/download/gitlab-omnibus-0.1.0/gitlab-omnibus-0.1.0.tgz
     version: 0.1.0
   gotify:
+  - apiVersion: v2
+    appVersion: 2.0.23
+    created: "2022-10-13T00:25:09.08062894Z"
+    description: Gotify server
+    digest: f0f1ef49e5277941a5e6ccae05f8073fa98b31a09a648297468f076034c63dd0
+    name: gotify
+    type: application
+    urls:
+    - https://github.com/LKummer/Helm-Charts/releases/download/gotify-0.2.1/gotify-0.2.1.tgz
+    version: 0.2.1
   - apiVersion: v2
     appVersion: 2.0.23
     created: "2022-10-12T14:01:11.914058321Z"
@@ -178,4 +198,4 @@ entries:
     urls:
     - https://github.com/LKummer/Helm-Charts/releases/download/tfstate-postgres-0.1.0/tfstate-postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-12T14:01:11.914086122Z"
+generated: "2022-10-13T00:25:09.080700145Z"
