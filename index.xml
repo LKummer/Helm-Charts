@@ -21,20 +21,6 @@ $ helm delete example Configuration The chart offers the following list of confi
     </item>
     
     <item>
-      <title>backup</title>
-      <link>https://lkummer.github.io/Helm-Charts/backup/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://lkummer.github.io/Helm-Charts/backup/</guid>
-      <description>Prerequisites Add the repository to Helm:
-$ helm repo add homelab https://lkummer.github.io/Helm-Charts $ helm repo update Restic REST server or another form of storage for Restic repositories is required. Support for cloud providers will be added soon.
-Deploy the Chart Create a values.yaml file with values you wish to override.
-Install the chart:
-$ helm install example homelab/backup --file values.yaml Upgrade the Chart Upgrade the chart:
-$ helm upgrade example homelab/backup --file values.</description>
-    </item>
-    
-    <item>
       <title>gitlab-omnibus</title>
       <link>https://lkummer.github.io/Helm-Charts/gitlab-omnibus/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

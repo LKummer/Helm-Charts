@@ -287,6 +287,50 @@
 <td><code>timezone</code></td>
 <td>Gitlab time zone.</td>
 </tr>
+<tr>
+<td><code>backup</code></td>
+<td>Backup and restore related options.</td>
+</tr>
+<tr>
+<td><code>backup.enabled</code></td>
+<td>Enable backup and restore functionality when true.</td>
+</tr>
+<tr>
+<td><code>backup.backup.enabled</code></td>
+<td>Enable backup CronJob when true.</td>
+</tr>
+<tr>
+<td><code>backup.backup.schedule</code></td>
+<td>Backup CronJob schedule.</td>
+</tr>
+<tr>
+<td><code>backup.restore.enabled</code></td>
+<td>Enable backup restoration when true.</td>
+</tr>
+<tr>
+<td><code>backup.restore.snapshot</code></td>
+<td>Restic snapshot to restore from.</td>
+</tr>
+<tr>
+<td><code>backup.keep</code></td>
+<td>Keep options passed to Restic forget command, see values for an example.</td>
+</tr>
+<tr>
+<td><code>backup.repository.s3AccessKey</code></td>
+<td>S3 access key for backup storage authentication.</td>
+</tr>
+<tr>
+<td><code>backup.repository.s3SecretKey</code></td>
+<td>S3 secret key for backup storage authentication.</td>
+</tr>
+<tr>
+<td><code>backup.repository.repository</code></td>
+<td>Backup Restic repository, see values for an example.</td>
+</tr>
+<tr>
+<td><code>backup.repository.repositoryPassword</code></td>
+<td>Backup Restic repository password.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="upgrade-instructions">Upgrade Instructions</h2>
