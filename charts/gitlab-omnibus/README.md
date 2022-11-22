@@ -120,6 +120,16 @@ When updating from version `0.1.1` (Gitlab 13.10.2) to version `0.3.0` (Gitlab 1
 6. Chart version `0.2.0` with default `image.tag`. Gitlab Pages should work.
 7. Chart version `0.3.1` with default `image.tag`.
 
+When updating from version `0.3.0` (Gitlab 14.6.1) to version `0.4.0` (Gitlab 15.5.0), follow the upgrade path:
+
+1. Chart version `0.3.0` with default `image.tag`.
+2. Chart version `0.4.0` with `image.tag`=`14.9.5`. Wait for background migrations to finish.
+3. Chart version `0.4.0` with `image.tag`=`14.10.5`. Wait for background migrations to finish.
+4. Chart version `0.4.0` with `image.tag`=`15.0.5`. Wait for background migrations to finish.
+5. Chart version `0.4.0` with `image.tag`=`15.4.0`. Wait for background migrations to finish.
+6. Chart version `0.4.0` with `image.tag`=`15.5.0`. Wait for background migrations to finish.
+7. Upgrade Gitlab Runner chart to version `0.46.0`.
+
 [Check out upgrade paths documentation](https://docs.gitlab.com/ee/update/index.html#upgrade-paths) for more information.
 
 Should the need to reconfigure Gitlab arise, open a shell in the Gitlab Omnibus container, stop Gitlab and reconfigure:
