@@ -62,23 +62,17 @@ spec:
           livenessProbe:
             exec:
               command:
-                - nslookup
-                - '{{ (first .Values.adguard.config.rewrites).domain | default "example.com" | replace "*." "foo." }}'
-                - '127.0.0.1'
+                - /opt/adguardhome/scripts/healthcheck.sh
             initialDelaySeconds: 30
           readinessProbe:
             exec:
               command:
-                - nslookup
-                - '{{ (first .Values.adguard.config.rewrites).domain | default "example.com" | replace "*." "foo." }}'
-                - '127.0.0.1'
+                - /opt/adguardhome/scripts/healthcheck.sh
             initialDelaySeconds: 30
           startupProbe:
             exec:
               command:
-                - nslookup
-                - '{{ (first .Values.adguard.config.rewrites).domain | default "example.com" | replace "*." "foo." }}'
-                - '127.0.0.1'
+                - /opt/adguardhome/scripts/healthcheck.sh
             initialDelaySeconds: 30
             failureThreshold: 10
             periodSeconds: 10
