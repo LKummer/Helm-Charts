@@ -344,6 +344,16 @@
 <li>Chart version <code>0.2.0</code> with default <code>image.tag</code>. Gitlab Pages should work.</li>
 <li>Chart version <code>0.3.1</code> with default <code>image.tag</code>.</li>
 </ol>
+<p>When updating from version <code>0.3.0</code> (Gitlab 14.6.1) to version <code>0.4.0</code> (Gitlab 15.5.0), follow the upgrade path:</p>
+<ol>
+<li>Chart version <code>0.3.0</code> with default <code>image.tag</code>.</li>
+<li>Chart version <code>0.4.0</code> with <code>image.tag</code>=<code>14.9.5</code>. Wait for background migrations to finish.</li>
+<li>Chart version <code>0.4.0</code> with <code>image.tag</code>=<code>14.10.5</code>. Wait for background migrations to finish.</li>
+<li>Chart version <code>0.4.0</code> with <code>image.tag</code>=<code>15.0.5</code>. Wait for background migrations to finish.</li>
+<li>Chart version <code>0.4.0</code> with <code>image.tag</code>=<code>15.4.0</code>. Wait for background migrations to finish.</li>
+<li>Chart version <code>0.4.0</code> with <code>image.tag</code>=<code>15.5.0</code>. Wait for background migrations to finish.</li>
+<li>Upgrade Gitlab Runner chart to version <code>0.46.0</code>.</li>
+</ol>
 <p><a href="https://docs.gitlab.com/ee/update/index.html#upgrade-paths">Check out upgrade paths documentation</a> for more information.</p>
 <p>Should the need to reconfigure Gitlab arise, open a shell in the Gitlab Omnibus container, stop Gitlab and reconfigure:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-s" data-lang="s"><span class="o">$</span> <span class="n">kubectl</span> <span class="n">exec</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">t</span> <span class="n">example</span><span class="o">-</span><span class="n">gitlab</span><span class="o">-</span><span class="n">omnibus</span><span class="o">-</span><span class="n">xxxxxxxx</span><span class="o">-</span><span class="n">xxxxx</span> <span class="o">--</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
