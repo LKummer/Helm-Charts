@@ -47,9 +47,9 @@ The chart offers the following list of configuration values.
 | `nameOverride` | Override the name of the chart. |
 | `fullnameOverride` | Override the full name of the chart. |
 | `adguard` | Options regarding Adguard Home container. |
-| `adguard.repository` | Adguard image repository and name. |
-| `adguard.tag` | Adguard image tag. |
-| `adguard.pullPolicy` | Adguard image pull policy. |
+| `adguard.image.repository` | Adguard image repository and name. |
+| `adguard.image.tag` | Adguard image tag. |
+| `adguard.image.pullPolicy` | Adguard image pull policy. |
 | `adguard.securityContext` | Adguard container security policy. |
 | `adguard.resources` | Adguard container resource requests and limits. |
 | `adguard.config` | Adguard configuration options. |
