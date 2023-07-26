@@ -40,5 +40,5 @@ data:
     gitlab_workhorse['prometheus_listen_addr'] = '0.0.0.0:{{ .port }}'
   {{- end }}
   {{- with .Values.metrics.gitaly }}
-    gitaly['prometheus_listen_addr'] = '0.0.0.0:{{ .port }}'
+    gitaly['configuration']['prometheus_listen_addr'] = '0.0.0.0:{{ .port }}'
   {{- end }}
